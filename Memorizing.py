@@ -1,4 +1,4 @@
-import tkinter
+import tkinter, tkinter.filedialog
 
 screen=tkinter.Tk()
 screen.geometry("600x600")
@@ -15,9 +15,23 @@ def remove():
     for i in reversed(selected_items):
         listbox.delete(i)
 
-button= tkinter.Button(screen, text="Open", width= 15)
+def save():
+    items_saved= listbox.get(0,tkinter.END)
+    save_file= tkinter.filedialog.asksaveasfile()
+    if save_file!=None:
+        for i in items_saved:
+            print(i, file=save_file)
+
+def open():
+    opened_file= tkinter.filedialog.askopenfile()
+    if opened_file!= None:
+        items= opened_file.readlines()
+        for i in items:
+            listbox.insert(tkinter.END, i)
+
+button= tkinter.Button(screen, text="Open", width= 15, command=open)
 button1=tkinter.Button(screen, text= "Delete", width=15, command=remove) 
-button2= tkinter.Button(screen, text="Save", width=15)
+button2= tkinter.Button(screen, text="Save", width=15, command=save)
 button3= tkinter.Button(screen, text="Add", width=15, command= add)
 button.grid(row=1, column=1, padx= 10, pady=10)
 button1.grid(row=1, column=2, padx=10, pady=10)
