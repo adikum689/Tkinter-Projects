@@ -4,10 +4,36 @@ screen.geometry("600x600")
 screen.configure(background="white")
 screen.title("Address Book")
 
+contact= {}
+def update_list():
+    name2= contact.keys()
+    listbox.delete(0, tkinter.END)
+    for name in name2:
+        listbox.insert(tkinter.END, name )
+    
+def save_values():
+    name1= entry1.get()
+    address1= entry2.get()
+    mobile1= entry3.get()
+    email1= entry4.get()
+    birthday1= entry5.get()
+    contact[name1]= {address1, mobile1, email1, birthday1}
+    update_list()
+
+def edit_values():
+    selected_values= listbox.curselection()
+    name= listbox.get(selected_values)
+    entry1.insert(name)
+    
+
+
+
+
+
 open= tkinter.Button(screen, text="Open")
-update= tkinter.Button(screen, text="Update/Add")
+update= tkinter.Button(screen, text="Update/Add", command= save_values)
 delete= tkinter.Button(screen, text="Delete")
-edit= tkinter.Button(screen, text="Edit")
+edit= tkinter.Button(screen, text="Edit", command= edit_values)
 save= tkinter.Button(screen, text= "Save", width=20)
 name= tkinter.Label(screen, text= "name")
 address= tkinter.Label(screen, text="address")
@@ -38,6 +64,9 @@ edit.grid(row=7, column=1)
 delete.grid(row=7, column=2)
 update.grid(row=7, column=3)
 save.grid(row=8, column=1, columnspan=3, pady=20)
+
+
+    
 
 screen.mainloop()
 
