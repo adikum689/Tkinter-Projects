@@ -1,19 +1,44 @@
-import tkinter, random
+import tkinter, random, tkinter.messagebox
 screen=tkinter.Tk()
 screen.geometry("450x350")
 screen.title("Tic Tac Toe")
 screen.configure(background="white")
 
+def check_winner():
+    winning_combinations= [(button1,button4,button7), (button2,button5,button8), (button3,button6,button9), (button1,button2,button3), (button4,button6,button5), (button7,button8,button9), (button1, button5, button9), (button3,button5,button7)]
+    for i in winning_combinations:
+        if i[0]["text"]== "X" and i[1]["text"]== "X" and i[2]["text"]=="X":
+            tkinter.messagebox.showinfo("Tic Tac Toe", "You Win!")
+            return True
+        if i[0]["text"]== "O" and i[1]["text"]=="O" and i[2]["text"]== "O":
+            tkinter.messagebox.showinfo("Tic Tac Toe", "Computer Wins")
+            return True
+    if len(available_buttons)==0:
+        tkinter.messagebox.showinfo("Tic Tac Toe", "Tie")
+        return True
+    return False
+
+
+
+
+
+
+        
 def place_x(button_clicked): 
     if button_clicked in available_buttons:
         button_clicked.config(text="X")
         available_buttons.remove(button_clicked)
-        place_o()
+        x= check_winner()
+        if not x:
+            place_o()
+            x=check_winner()
+   
 
 def place_o():
     computer_choice= random.choice(available_buttons)
     computer_choice.config(text="O")
     available_buttons.remove(computer_choice)
+    
 
 
 
